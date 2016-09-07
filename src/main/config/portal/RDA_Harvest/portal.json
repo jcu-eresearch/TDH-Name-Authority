@@ -1,0 +1,21 @@
+{
+  "portal" : {
+    "name" : "RDA_Harvest",
+    "description" : "RDA Harvested Objects",
+    "query" : "published:\"true\" -oai_set:\"Parties_People\"",
+    "facet-fields" : {
+      "repository_name" : {
+        "label" : "Source",
+        "display" : "list"
+      },
+      "repository_type" : {
+        "label" : "Source type",
+        "display" : "list"
+      }
+    },
+    "sort-fields" : {
+      "last_modified" : "Last modified",
+      "f_dc_title" : "Title"
+    }
+  }
+}

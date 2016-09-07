@@ -1,0 +1,5 @@
+MINT_HOME="${project.home}"
+MINT_HOSTNAME="${mint.hostname}"
+MINT_CONTEXT="${mint.context}"
+LOCAL_PORT="${server.port}"
+USER=""

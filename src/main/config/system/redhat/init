@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+# mint          This shell script takes care of starting and stopping
+#               the Mint server.
+#
+# chkconfig: - 30 60
+# description: 	Mint is an name-authority and vocabulary 
+#		service that complements ReDBox.
+# probe: true
+# config: /etc/sysconfig/mint
+
+### BEGIN INIT INFO
+# Provides: mint
+# Required-Start: $local_fs $network $httpd
+# Required-Stop: $local_fs $network
+# Default-Stop: 0 1 6
+# Short-Description: Start up the ReDBoX Server
+# Description: 	Mint is an name-authority and vocabulary 
+#               service that complements ReDBox.
+### END INIT INFO
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+if [ -f /etc/sysconfig/mint ]
+
+then
+  . /etc/sysconfig/mint
+  if [ -z $USER ]
+  then
+    echo "Please set the USER paremiter in /etc/sysconfig/mint"
+    exit 4
+  fi
+else
+    echo "the config file: /etc/sysconfig/mint does not exist. Ensure to symlink it to it apprioate location."
+    exit 4
+fi
+
+RETVAL=0
+
+uid=`id | cut -d\( -f1 | cut -d= -f2`
+
+# Only root can start the service
+[ $uid -ne 0 ] && exit 4
+
+case "$1" in
+  start)
+        su - $USER  -c ${MINT_HOME}/server/tf.sh\ start
+        echo ""
+        echo -n "Waiting for service to become available"
+        while [ -z `netstat -tpln | grep ${LOCAL_PORT} | cut -f 1 -d " "` ]; do echo -n "."; sleep 1; done
+        nohup ${MINT_HOME}/server/initserver.sh ${MINT_HOSTNAME} ${LOCAL_PORT} ${MINT_CONTEXT} &> /dev/null &
+        ;;
+  stop)
+        su - $USER  -c ${MINT_HOME}/server/tf.sh\ stop
+        ;;
+  restart)
+        stop
+        stop
+        ;;
+  status)
+        su - $USER  -c ${MINT_HOME}/server/tf.sh\ status
+        ;;
+   *)
+        echo $"Usage: mint {start|stop|status|restart}"
+        RETVAL=2
+        ;;
+esac
+
+exit $RETVAL

@@ -1,0 +1,2 @@
+<link rel="stylesheet" type="text/css" href="$portalPath/css/local.css" />
+<link rel="search" type="application/opensearchdescription+xml" href="$portalPath/opensearch/description" title="JCU Name Authority ($page.getPortalName())" />

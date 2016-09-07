@@ -1,0 +1,74 @@
+{
+    "harvester":{
+        "type":"csv",
+        "csv":{
+            "fileLocation":"${fascinator.home}/data/hr_data/activities_diff.csv",
+            "idColumn":"ID",
+            "recordIDPrefix":"jcu.edu.au/activities/",
+            "headerRow":true,
+            "delimiter":",",
+            "multiValueFieldDelimiter":";",
+            "multiValueFields":["INVESTIGATORS", "OTHER_INVESTIGATORS", "FOR_CODES", "SEO_CODES", "KEYWORDS"],
+            "ignoredFields":[],
+            "includedFields":[
+                "ID",
+                "OTHER_ID",
+                "START_YEAR",
+                "END_YEAR",
+                "TITLE",
+                "SHORT_TITLE",
+                "DESCRIPTION",
+                "INSTITUTION",
+                "INVESTIGATORS",
+                "OTHER_INVESTIGATORS",
+                "FOR_CODES",
+                "SEO_CODES",
+                "KEYWORDS",
+                "SUBMIT_YEAR",
+                "DISCIPLINE",
+                "FUNDING_SCHEME"
+            ]
+        }
+    },
+
+    "transformer":{
+        "curation":["local"],
+        "metadata":["ingest-relations", "jsonVelocity"]
+    },
+    "curation":{
+        "neverPublish":false,
+        "alreadyCurated":false
+    },
+
+    "transformerOverrides":{
+        "ingest-relations": {
+            "sourcePid": "metadata.json",
+            "sourcePath": ["data"],
+            "relations": {
+                "INVESTIGATORS": {
+                    "prefix": "jcu.edu.au/parties/people/",
+                    "relation": "hasParticipant",
+                    "reverseRelation": "isParticipant"
+                }
+            }
+        },
+        "local": {
+            "template": "${server.url.base}published/detail/[[OID]]"
+        },
+        "jsonVelocity":{
+            "templatesPath":"${fascinator.home}/templates/activities",
+            "portalId":"Activities"
+        }
+    },
+
+    "indexer":{
+        "script":{
+            "type":"python",
+            "rules":"Activities_TDH.py"
+        },
+        "params":{
+            "repository.name":"James Cook University Research Activities",
+            "repository.type":"Research Activities"
+        }
+    }
+}
