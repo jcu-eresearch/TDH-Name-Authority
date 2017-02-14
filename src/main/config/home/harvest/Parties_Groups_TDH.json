@@ -7,8 +7,10 @@
             "recordIDPrefix": "jcu.edu.au/parties/group/",
             "headerRow": true,
             "delimiter": ",",
+            "multiValueFieldDelimiter":";",
+            "multiValueFields":["Old_ID"],
             "ignoredFields": [],
-            "includedFields" : ["ID", "Name", "Email", "Phone", "Parent_Group_ID", "URI", "NLA_Party_Identifier", "Homepage", "Description"]
+            "includedFields" : ["ID", "Old_ID", "Name", "Email", "Phone", "Parent_Group_ID", "URI", "NLA_Party_Identifier", "Homepage", "Description", "Active_From", "Active_To"]
         }
     },
 
@@ -54,7 +56,7 @@
     "indexer": {
         "script": {
             "type": "python",
-            "rules": "Parties_Groups.py"
+            "rules": "Parties_Groups_TDH.py"
         },
         "params": {
             "repository.name": "Groups",
