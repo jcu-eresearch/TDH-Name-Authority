@@ -1,0 +1,152 @@
+body {
+    font-size: 75%;
+}
+
+h1#branding, .branding {
+    background:none repeat scroll 0 0 white;
+    padding-top: 1.5em;
+}
+
+#jcu-logo {
+    float: left;
+    padding-top: 10px;
+    padding-right: 1em;
+}
+
+#tdh-logo {
+    float: right;
+}
+
+.subtitle {
+    font-size:larger;
+    padding-bottom:0.5em;
+    padding-left:0.85em;
+}
+
+ul.nav, ul.main li a, .box h2 {
+    background: #00a651;
+}
+ul.nav li.secondary, ul.nav li.secondary span.status a {
+    color: white;
+}
+
+ul.menu li a:hover {
+    background: #8cc63f;
+    color: white;
+}
+
+ul.main li:hover ul li a {
+    background: #00A651;
+}
+
+ul.main li:hover ul li a:hover {
+    background-color: #8cc63f;
+}
+
+.menu .selected,.menu .selected:hover {
+    background: #8cc63f;
+}
+
+.facet-list .portal-facet {
+    background: #8cc63f;
+    font-style: italic;
+}
+
+.box {
+    background: #dedbc3;
+}
+
+.box h2 {
+    background: #00a651;
+}
+
+.grid_4 .box h2 a {
+    background-position:97% 50%;
+}
+
+.box h2 a {
+    background-image:url("../images/icons/switch_plus.gif");
+}
+
+.box h2 a:hover {
+    background-color: #0db14b;
+}
+
+.box h2 a, .box h2 a.visible {
+    /*background:url("../images/icons/switch_minus.gif") no-repeat scroll 97% 50% #00a651;*/
+    background-color:#00a651;
+    border:medium none;
+    color:#FFFFFF;
+    display:block;
+    margin:-6px -12px;
+    padding:6px 12px;
+}
+
+fieldset {
+    background: #dedbc3;
+}
+
+thead th {
+    background: #8cc63f;
+}
+
+tbody th,tbody td {
+    background: #dedbc3;
+}
+/*
+body {
+    background: #B7DAA0;
+}
+
+.container_16 {
+    background: #E2FFCD;
+}
+*/
+
+ul.main li ul li.selected-view a, ul.main li:hover ul li a:hover {
+    background-color: #00a651;
+}
+
+.pId {
+    margin: 3px 0px;
+    padding: 4px;
+    border: 1px solid black;
+    background: #FFFFCC;
+    font-size: 120%;
+}
+.handle-report .row-count {
+    margin: 3px 0px;
+    padding: 4px;
+    border: 1px solid black;
+    background: #FFFFCC;
+    font-size: 120%;
+}
+.handle-report th {
+    background-color: #00a651;
+    color: #FFFFFF;
+}
+.handle-report .row-count a {
+    background:url("../images/icons/table_save.png");
+    background-position: 0 0.5em;
+    background-repeat: no-repeat;
+    margin-right: 1em;
+    padding: 0.5em 0.5em 0.5em 20px;
+}
+
+.ticked {
+    background-image: url(../images/icons/tick.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 20px;
+}
+
+.waiting {
+    background-image: url(../images/icons/hourglass.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 20px;
+}
+
+a#fascinator-blog-link {
+  display:none;
+}

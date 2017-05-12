@@ -1,0 +1,10 @@
+<div class="grid_16 branding">
+  <div id="jcu-logo">
+  <a href="http://www.jcu.edu.au"><img height="85" src="$portalPath/images/jcu_logo_web.gif"></a>
+  </div>
+  <div id="tdh-logo">
+  <img src="$portalPath/images/black_full_logo.png">
+  </div>
+  <h1 id="branding"><a href="$portalPath/home"><a href="$portalPath/home">Name Authority</a></h1>
+</div>
+<div class="clear"></div>

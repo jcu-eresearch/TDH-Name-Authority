@@ -1,0 +1,44 @@
+{
+    "harvester": {
+        "type": "csv",
+        "csv": {
+            "fileLocation": "${fascinator.home}/data/service_software.csv",
+            "idColumn": "id",
+            "recordIDPrefix": "jcu.edu.au/tdh/service/",
+            "headerRow": true,
+            "delimiter": ",",
+            "ignoredFields": [],
+            "includedFields" : ["id", "Name", "Type", "Related_party1", "Related_relationship1", "Related_party2", "Related_relationship2", "Related_party3", "Related_relationship3", "ANZSRC_FOR_1", "ANZSRC_FOR_2", "ANZSRC_FOR_3", "Keywords", "Location_URL", "licence", "licence_URL", "access_rights", "deliverymethod", "full_description", "brief_description", "note_description_1", "note_description_2", "Website", "Website_Title"]
+        }
+    },
+
+    "transformer": {
+        "curation": ["local"],
+        "metadata": ["jsonVelocity"]
+    },
+    "curation": {
+        "neverPublish": false,
+        "alreadyCurated": false
+    },
+
+    "transformerOverrides": {
+        "local": {
+            "template": "${server.url.base}published/detail/[[OID]]"
+        },
+        "jsonVelocity": {
+            "templatesPath" : "${fascinator.home}/templates/services",
+            "portalId": "Services"
+        }
+    },
+
+    "indexer": {
+        "script": {
+            "type": "python",
+            "rules": "Software_Services.py"
+        },
+        "params": {
+            "repository.name": "Local Services",
+            "repository.type": "Services"
+        }
+    }   
+}

@@ -2,8 +2,8 @@
     "version": "1.1.0.1",
     "redbox.version.string": "${redbox.version}",
     "redbox.identity": {
-        "institution": "University of Examples",
-        "RIF-CS Group": "The University of Examples, Australia"
+        "institution": "James Cook University",
+        "RIF-CS Group": "James Cook University"
     },
     "system":"mint",
     "configured": true,
@@ -119,10 +119,11 @@
         "supported-types":{ "person":"mint","group":"mint"},
         "identifier-pids":{"local":"localPid","handle":"handlePid","nla":"nlaPid"},
         "nlaIntegration": {
-            "enabled": false,
+            "enabled": true,
+            "useNlaIdForRelationships": true,
             "pidProperty": "nlaPid",
-            "agencyCode": "TO-DO",
-            "agencyName": "The University of Examples, Australia",
+            "agencyCode": "AU-QJCU",
+            "agencyName": "James Cook University, Australia",
             "includeTest": {
                 "repository.name": "People"
             }
@@ -273,8 +274,8 @@
                     {
                         "name": "nla-poll",
                         "type": "external",
-                        "url": "http://localhost:${jetty.port}/mint/default/hkjobs/nla.script",
-                        "timing": "0 0/15 * * * ?"
+                        "url": "http://localhost:${jetty.port}/nameauthority/default/hkjobs/nla.script",
+                        "timing": "0 0 5 * * ?"
                     }
                 ]
             }
@@ -284,7 +285,7 @@
             "metadataFormats": {
                 "rif": {
                     "enabledInAllViews": false,
-                    "enabledViews": ["published"],
+                    "enabledViews": ["published","RDA_Harvest"],
                     "schema": "http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/home/orca/schemata/registryObjects.xsd",
                     "metadataNamespace": "http://ands.org.au/standards/rif-cs/registryObjects"
                 },

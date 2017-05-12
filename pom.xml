@@ -1,39 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.googlecode.redbox-mint</groupId>
-    <artifactId>mint-distro</artifactId>
-    <version>1.9</version>
-    <packaging>${packaging}</packaging>
-    <name>The Mint - Distribution</name>
+    <groupId>au.edu.jcu.redbox.build</groupId>
+    <artifactId>jcu-mint</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>JCU Mint institutional Build</name>
     <parent>
         <groupId>com.googlecode.redbox-mint</groupId>
         <artifactId>mint</artifactId>
         <version>1.9</version>
     </parent>
     <properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Used in build -->
-        <mint.version>1.9</mint.version>
-        <!-- Runtime values, will replace placeholders
-                 in config and control scripts -->
-        <packaging>pom</packaging>
-        <app.location.windows>${project.home}</app.location.windows>
-        <app.location.linux>${project.home}</app.location.linux>
-        <server.port>9001</server.port>
-        <amq.port>9201</amq.port>
-        <amq.stomp.port>9202</amq.stomp.port>
-        <dir.home>${project.home}/home</dir.home>
-        <dir.portal>${project.home}/portal</dir.portal>
-        <dir.server>${project.home}/server</dir.server>
-        <dir.solr>${project.home}/solr</dir.solr>
-        <dir.storage>${project.home}/storage</dir.storage>
-        <dir.geonames>${dir.home}/geonames/solr</dir.geonames>
-        <server.url.base>http://${ip.address}:${server.port}/mint/</server.url.base>
-        <smtp.host>localhost</smtp.host>
-        <admin.email>admin@localhost</admin.email>
-        <!-- Control scripts try to auto-detect proxy. Use this value if you
-                 want Java to specifically exclude certain hosts from proxying. -->
-        <non.proxy.hosts>localhost</non.proxy.hosts>
+        <mint.version>${project.parent.version}</mint.version>
     </properties>
     <dependencies>
         <!-- Mint Core - We want to explicitly define versions here because
@@ -61,7 +42,13 @@
             <artifactId>plugin-transaction-external-curation</artifactId>
             <version>1.2</version>
         </dependency>
-
+        <!-- Mint Curation Plugin -->
+        <!-- override to use curation 1.8 - added this dependency as missing from 1.8 - should ensure JCU curation fix runs-->
+        <dependency>
+            <groupId>com.googlecode.redbox-mint</groupId>
+            <artifactId>plugin-transaction-curation-mint</artifactId>
+            <version>1.8</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.redbox-mint</groupId>
             <artifactId>sruclient-mint</artifactId>
@@ -216,11 +203,11 @@
     <profiles>
         <profile>
             <id>build-package</id>
-            <properties>
-                <app.location.windows>c:/tf2/mint</app.location.windows>
-                <app.location.linux>/opt/mint</app.location.linux>
-                <server.url.base>http://localhost:${server.port}/mint/</server.url.base>
-            </properties>
+            <!--properties-->
+                <!--app.location.windows>c:/tf2/mint</app.location.windows-->
+                <!--app.location.linux>/opt/mint</app.location.linux-->
+                <!--server.url.base>http://localhost:${server.port}/mint/</server.url.base-->
+            <!--/properties-->
             <!-- Used for creating an install - omits local build system settings -->
             <build>
                 <plugins>
@@ -355,6 +342,41 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>${pom.basedir}/setup.groovy</source>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean</id>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>${pom.basedir}/setup.groovy</source>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>2.3.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <!-- 1st - Unpack Generic Mint setup -->
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -478,6 +500,35 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-system-scripts</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${dir.system}</outputDirectory>
+                            <includeEmptyDirs>true</includeEmptyDirs>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <!-- Resolve some paths in our control scripts -->
+                                <resource>
+                                    <directory>src/main/config/system</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/init</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/config/system</directory>
+                                    <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>**/init</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                     <!-- Solr logging -->
                     <execution>
                         <id>copy-solr</id>
@@ -507,6 +558,7 @@
                         <configuration>
                             <tasks>
                                 <chmod file="${dir.server}/*.sh" perm="740" />
+                                <chmod dir="${dir.system}" includes="**/init" perm="744"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -567,9 +619,9 @@
         </repository>
     </repositories>
     <scm>
-        <url>scm:git://github.com/redbox-mint/mint-build-distro.git</url>
-        <connection>scm:git://github.com/redbox-mint/mint-build-distro.git</connection>
-        <developerConnection>scm:git:https://github.com/redbox-mint/mint-build-distro.git</developerConnection>
+        <url>https://github.com/jcu-eresearch/TDH-Name-Authority</url>
+        <connection>scm:svn:https://github.com/jcu-eresearch/TDH-Name-Authority.git</connection>
+        <developerConnection>scm:svn:https://github.com/jcu-eresearch/TDH-Name-Authority.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <distributionManagement>
