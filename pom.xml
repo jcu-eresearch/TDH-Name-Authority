@@ -43,11 +43,11 @@
             <version>1.2</version>
         </dependency>
         <!-- Mint Curation Plugin -->
-        <!-- override to use curation 1.8 - added this dependency as missing from 1.8 - should ensure JCU curation fix runs-->
+        <!-- override to use curation 1.9 - added this dependency as missing from 1.9 - should ensure JCU curation fix runs-->
         <dependency>
             <groupId>com.googlecode.redbox-mint</groupId>
             <artifactId>plugin-transaction-curation-mint</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.the-fascinator.plugins</groupId>
@@ -373,14 +373,14 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
+                <!-- dependencies>
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-all</artifactId>
                         <version>2.3.4</version>
                         <scope>runtime</scope>
                     </dependency>
-                </dependencies>
+                </dependencies -->
             </plugin>
             <!-- 1st - Unpack Generic Mint setup -->
             <plugin>
